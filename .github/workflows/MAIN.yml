@@ -12,10 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2.5.4
+      - uses: actions/setup-node@v2.5.2
         with:
           node-version: '16.x'
 
@@ -34,4 +32,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: snake-contribution
           force: true
-
