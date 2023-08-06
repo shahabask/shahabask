@@ -8,14 +8,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository with your GitHub username
+      # Checks-out your repository
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-          repository: shahabask/your-repository-name # Replace "your-repository-name" with your actual repository name
 
       - name: Minify Action
-        uses: anthonyftwang/minify-action@v1.0.1
+        uses: shahabask/minify-action@v1.0.1
 
       # Auto-commit to repository
       - uses: stefanzweifel/git-auto-commit-action@v4
