@@ -1,23 +1,37 @@
 
-name: Minify Workflow
+name: Generate Snake Contribution Graph
+
 on:
-  push:
-    branches: [ main ]
+  schedule:
+    # Every 6 hours
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      # Checks-out your repository
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
 
-      - name: Minify Action
-        uses: shahabask/minify-action@v1.0.1
-
-      # Auto-commit to repository
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          commit_message: Minify source code
-          branch: ${{ github.ref }}
+          node-version: '16.x'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Generate Snake Contribution Graph
+        run: npm run generate-graph
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USER_NAME: shahabask
+
+      - name: Push changes to "snake-contribution" branch
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: snake-contribution
+          force: true
+
